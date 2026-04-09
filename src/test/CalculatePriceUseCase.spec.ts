@@ -28,6 +28,7 @@ describe('CalculatePriceUseCase', () => {
 
         const promoCodes: string[] = [];
 
+        // @ts-ignore
         const useCase = new CalculatePriceUseCase();
 
         const finalPrice = useCase.execute(cart, promoCodes);
