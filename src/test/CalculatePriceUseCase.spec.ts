@@ -1,5 +1,5 @@
 import { describe, it, expect} from "vitest";
-import { CalculatePriseUseCase } from '../app/CalculatePriceUseCase';
+import { CalculatePriceUseCase } from '../app/CalculatePriceUseCase';
 
 describe('CalculatePriceUseCase', () => {
     describe('carts without discount', () => {
@@ -8,13 +8,13 @@ describe('CalculatePriceUseCase', () => {
         const cart = {
             items: [
                 {name: 'T-shirt', price: 10, quantity: 3},
-                {name: 'glasse', price: 35, quantity: 1},
+                {name: 'glass', price: 35, quantity: 1},
             ],
         };
 
         const promoCodes: string[] = [];
 
-        const useCase = new CalculatePriseUseCase();
+        const useCase = new CalculatePriceUseCase();
 
         const finalPrice = useCase.execute(cart, promoCodes);
 
