@@ -1,5 +1,5 @@
 import { describe, it, expect} from "vitest";
-import { CalculatePriceUseCase } from '../app/CalculatePriceUseCase';
+import CalculatePriceUseCase from '../app/CalculatePriceUseCase';
 import { PromoCodeRepository, PromoCode } from '../app/PromoCodeRepository';
 
 class StubPromoCodeRepository implements PromoCodeRepository {
