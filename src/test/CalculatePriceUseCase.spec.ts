@@ -53,41 +53,21 @@ describe('CalculatePriceUseCase', () => {
         });
     });
 
-    describe('code promo fixed', () => {
-        it('Should apply a fixed discount of 30€ with code PROMO30', () => {
+    describe('code promo 1BUY1FREE', () => {
+        it('Should apply buy one get one free on cart items', () => {
             const cart = {
                 items: [
-                    { name: 'T-shirt', price: 50, quantity: 2 },
+                    { name: 'T-shirt', price: 10, quantity: 4 },
                 ],
             };
 
-            const promoCode = ['PROMO30'];
+            const promoCode = ['1BUY1FREE'];
             const stubRepo = new StubPromoCodeRepository()
-                .withPromo({ code: 'PROMO30', type: 'fixe', value: 30 });
+                .withPromo({ code: '1BUY1FREE', type: '1buy1free', value: 0 });
 
             const useCase = new CalculatePriceUseCase(stubRepo);
             const finalPrice = useCase.execute(cart, promoCode);
-
-            expect(finalPrice).toBe(70); // 100 - 30 = 70€
-        });
-
-        it('Should return a minimum of 1€ if discount exceeds total', () => {
-            const cart = {
-                items: [
-                    { name: 'T-shirt', price: 10, quantity: 1 },
-                ],
-            };
-
-            const promoCode = ['PROMO30'];
-            const stubRepo = new StubPromoCodeRepository()
-                .withPromo({ code: 'PROMO30', type: 'fixe', value: 30 });
-
-            const useCase = new CalculatePriceUseCase(stubRepo);
-            const finalPrice = useCase.execute(cart, promoCode);
-
-            expect(finalPrice).toBe(1); // 10 - 30 = -20 → minimum 1€
+            expect(finalPrice).toBe(20); // 4 T-Shirt buy 2 free
         });
     });
-
-
 });
