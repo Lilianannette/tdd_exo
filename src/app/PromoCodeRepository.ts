@@ -1,6 +1,6 @@
 export interface PromoCode {
     code: string;
-    type: 'percentage' | 'fixe' | '1buy1free';
+    type: 'percentage' | 'fixe' | '1buy1free' | 'blackfriday';
     value: number;
 }
 

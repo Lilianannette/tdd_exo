@@ -70,4 +70,43 @@ describe('CalculatePriceUseCase', () => {
             expect(finalPrice).toBe(20); // 4 T-Shirt buy 2 free
         });
     });
+
+    describe('Black Friday', () => {
+        it('Should apply 50% discount during Black Friday period', () => {
+            const cart = {
+                items: [
+                    { name: 'T-shirt', price: 100, quantity: 1 },
+                ],
+            };
+
+            const promoCode = ['BLACKFRIDAY'];
+            const stubRepo = new StubPromoCodeRepository()
+                .withPromo({ code: 'BLACKFRIDAY', type: 'blackfriday', value: 50 });
+
+            const fakeDate = new Date('2025-11-29T12:00:00');
+            const useCase = new CalculatePriceUseCase(stubRepo, () => fakeDate);
+            const finalPrice = useCase.execute(cart, promoCode);
+
+            expect(finalPrice).toBe(50); // 100 - 50% = 50€
+        });
+
+        it('Should not apply Black Friday discount outside the period', () => {
+            const cart = {
+                items: [
+                    { name: 'T-shirt', price: 100, quantity: 1 },
+                ],
+            };
+
+            const promoCode = ['BLACKFRIDAY'];
+            const stubRepo = new StubPromoCodeRepository()
+                .withPromo({ code: 'BLACKFRIDAY', type: 'blackfriday', value: 50 });
+
+
+            const fakeDate = new Date('2025-12-03T12:00:00');
+            const useCase = new CalculatePriceUseCase(stubRepo, () => fakeDate);
+            const finalPrice = useCase.execute(cart, promoCode);
+
+            expect(finalPrice).toBe(100);
+        });
+    });
 });
