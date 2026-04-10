@@ -1,6 +1,6 @@
 export interface PromoCode {
     code: string;
-    type: 'percentage',
+    type: 'percentage' | 'fixe'; 
     value: number;
 }
 

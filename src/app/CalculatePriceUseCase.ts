@@ -21,12 +21,15 @@ export class CalculatePriceUseCase {
 
         for (const code of promoCodes) {
             const promo = this.promoCodeRepository.findByCode(code);
-            if (promo && promo.type === 'percentage') {
-                total = total - (total * promo.value / 100);
+            if (promo) {
+                if (promo.type === 'percentage') {
+                    total = total - (total * promo.value / 100);
+                } else if (promo.type === 'fixe') {
+                    total = total - promo.value;
+                }
             }
         }
-
-        return total;
+        return Math.max(total, 1);
     }
 }
 
